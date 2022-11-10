@@ -1,15 +1,22 @@
 package dao;
 
+import java.util.List;
+
+import Exceptions.engineerException;
+import model.Complaints;
+import model.Engineer;
+
 public interface EngineerDao {
 	
-	public String engLogin(String username,String password);
+	public Engineer engLogin(String username,String password) throws engineerException;
 	
-	public String viewProblems();
+	public List<Complaints> viewProblems(Engineer engineer)throws engineerException;
 	
-	public String updateStatus(String status);
+	public String updateStatus(int complainId,Engineer engineer,String status)throws engineerException;
 	
-	public String viewAttended();
+	public List<Complaints> viewAttended(Engineer engineer)throws engineerException;
 	
-	public String changePassword(String newPassword);
+	public String changePassword(Engineer engineer,String newPassword)throws engineerException;
 
 }
+

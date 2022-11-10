@@ -10,8 +10,9 @@ public class Engineer {
 	private String engEmail;
 	private String engPassword;
 	private String engType;
+	private int hodId;
 	public Engineer(int engineerId, String engFirstName, String engLastName, String engCity, int engSalary,
-			String engEmail, String engPassword, String engType) {
+			String engEmail, String engPassword, String engType,int Hodid) {
 		this.engineerId = engineerId;
 		this.engFirstName = engFirstName;
 		this.engLastName = engLastName;
@@ -20,6 +21,7 @@ public class Engineer {
 		this.engEmail = engEmail;
 		this.engPassword = engPassword;
 		this.engType = engType;
+		this.hodId = Hodid;
 	}
 	public int getEngineerId() {
 		return engineerId;
@@ -69,13 +71,19 @@ public class Engineer {
 	public void setEngType(String engType) {
 		this.engType = engType;
 	}
+	public int getHodId() {
+		return hodId;
+	}
+	public void setHodId(int hodId) {
+		this.hodId = hodId;
+	}
 	@Override
 	public String toString() {
 		return "Engineer [engineerId=" + engineerId + ", engFirstName=" + engFirstName + ", engLastName=" + engLastName
 				+ ", engCity=" + engCity + ", engSalary=" + engSalary + ", engEmail=" + engEmail + ", engPassword="
-				+ engPassword + ", engType=" + engType + "]";
+				+ engPassword + ", engType=" + engType + ", HodId=" + hodId + "]";
 	}
-	
+
 	
 	
 }

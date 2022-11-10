@@ -1,16 +1,25 @@
 package dao;
 
+import java.util.List;
+
+import Exceptions.complainException;
+import Exceptions.engineerException;
+import Exceptions.hodException;
+import model.Complaints;
+import model.Engineer;
+import model.Hod;
+
 public interface HodDao {
 
-	public String loginHOD(String username,String password);
+	public Hod loginHOD(String username,String password) throws hodException;
 	
-	public String registerNewEngineer(String username,String password,String type);
+	public String registerNewEngineer(Engineer engineer,int hodId)throws hodException,engineerException;
 	
-	public String viewAllRegisteredEngineers();
+	public List<Engineer> viewAllRegisteredEngineers(int hodId)throws hodException,engineerException;
 	
-	public String deleteEngineer(String username);
+	public String deleteEngineer(String username)throws hodException,engineerException;
 	
-	public String raisedProblems();
+	public List<Complaints> raisedProblems(int hodId)throws hodException,complainException;
 	
-	public String assignProblem(int engId,int complainId);
+	public String assignProblem(int engId,int complainId)throws hodException,complainException;
 }

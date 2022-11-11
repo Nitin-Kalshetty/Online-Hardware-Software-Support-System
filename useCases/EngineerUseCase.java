@@ -15,7 +15,7 @@ public class EngineerUseCase {
 
 	public static void main(String[] args) throws Exception {
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Welcome to Hardware/Software Support System.");
+		System.out.println("Welcome to Engineer Department of Hardware/Software Support System.");
 		EngineerDao dao=new EngineerDaoImpl();
 		Engineer engineer = null;
 		while(true) {
@@ -34,7 +34,7 @@ public class EngineerUseCase {
 			}
 			
 		} catch (engineerException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 		System.out.println();
 		}
@@ -44,7 +44,7 @@ public class EngineerUseCase {
 			System.out.println("Press 2 for Updating The Status");
 			System.out.println("Press 3 To View the attended Problems");
 			System.out.println("Press 4 To Change the password");
-			System.out.println("Press 5 To Change the password");
+			System.out.println("Press 5 To Exit");
 			List<Complaints> list = new ArrayList<>();
 			int val = sc.nextInt();
 			if(val==1) {
@@ -56,7 +56,7 @@ public class EngineerUseCase {
 						list.forEach(System.out::println);
 					}
 				} catch (engineerException e) {
-					throw new engineerException(e.getMessage());
+					System.out.println(e.getMessage());
 				}
 				 System.out.println();
 			}else if(val==2) {
@@ -73,8 +73,12 @@ public class EngineerUseCase {
 					System.out.println("Invalid Input..");
 					continue;
 				}
-				String check = dao.updateStatus(complainId, engineer, status);
-				System.out.println(check);
+				try {
+					String check = dao.updateStatus(complainId, engineer, status);
+					System.out.println(check);
+				} catch (engineerException e) {
+					System.out.println(e.getMessage());
+				}
 				 System.out.println();
 			}else if(val==3) {
 				try {
@@ -85,7 +89,7 @@ public class EngineerUseCase {
 						list.forEach(System.out::println);
 					}
 				} catch (engineerException e) {
-					throw new engineerException(e.getMessage());
+					System.out.println(e.getMessage());
 				}
 				System.out.println();
 				
@@ -96,7 +100,7 @@ public class EngineerUseCase {
 					String changePassword = dao.changePassword(engineer, newPassword);
 					System.out.println(changePassword);
 				} catch (engineerException e) {
-					throw new engineerException(e.getMessage());
+					System.out.println(e.getMessage());
 				}
 				System.out.println();
 			}else if(val==5) {

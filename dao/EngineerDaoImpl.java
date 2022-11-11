@@ -79,11 +79,15 @@ public class EngineerDaoImpl implements EngineerDao {
 	public List<Complaints> viewAttended(Engineer engineer) throws engineerException {
 		List<Complaints> list = new ArrayList<>();
 		try (Connection conn = DBUtility.provideConnection()){
-			PreparedStatement ps = conn.prepareStatement("select * from complaints where status not like in(not assigned,assigned) and engineerId=?");
-			ps.setInt(1, engineer.getEngineerId());
+			String s1= "Not assigned";
+			String s2="assigned";
+			PreparedStatement ps = conn.prepareStatement("select * from complaints where status not in(?,?) and engineerId=?");
+			ps.setString(1, s1);
+			ps.setString(2, s2);
+			ps.setInt(3, engineer.getEngineerId());
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
-			list.add(new Complaints(rs.getInt("complainId"), rs.getInt("employeeId"), rs.getInt("EngineerId")));
+			list.add(new Complaints(rs.getInt("complainId"), rs.getInt("employeeId"), rs.getInt("EngineerId"),rs.getString("status"),rs.getString("type")));
 			}
 		} catch (SQLException e) {
 			throw new engineerException(e.getMessage());
@@ -95,7 +99,7 @@ public class EngineerDaoImpl implements EngineerDao {
 	public String changePassword(Engineer engineer,String newPassword) throws engineerException {
 		String message="Password Not Changed";
 		try (Connection conn = DBUtility.provideConnection()){
-			PreparedStatement ps = conn.prepareStatement("update engineer set password=? where email=?");
+			PreparedStatement ps = conn.prepareStatement("update engineer set engPassword=? where engEmail=?");
 			ps.setString(1, newPassword);
 			ps.setString(2, engineer.getEngEmail());
 			int x = ps.executeUpdate();

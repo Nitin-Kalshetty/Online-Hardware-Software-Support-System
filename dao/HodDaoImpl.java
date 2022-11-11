@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.Connection;
+//import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -42,19 +43,18 @@ public class HodDaoImpl implements HodDao {
 	}
 
 	@Override
-	public String registerNewEngineer(Engineer engineer,int hodId) throws hodException,engineerException{
+	public String registerNewEngineer(Engineer engineer) throws hodException,engineerException{
 		String message="Not registered";
 		try (Connection conn = DBUtility.provideConnection()){
-			PreparedStatement ps = conn.prepareStatement("insert into engineer values(?,?,?,?,?,?,?,?,?)");
-			ps.setInt(1, engineer.getEngineerId());
-			ps.setString(2, engineer.getEngFirstName());
-			ps.setString(3, engineer.getEngLastName());
-			ps.setString(4, engineer.getEngCity());
-			ps.setInt(5, engineer.getEngSalary());
-			ps.setString(6, engineer.getEngEmail());
-			ps.setString(7 , engineer.getEngPassword());
-			ps.setString(8, engineer.getEngType());
-			ps.setInt(9, hodId);
+			PreparedStatement ps = conn.prepareStatement("insert into engineer(engFirstName,engLastName,engCity,engSalary,engEmail,engPassword,engType,hodId) values(?,?,?,?,?,?,?,?)");
+			ps.setString(1, engineer.getEngFirstName());
+			ps.setString(2, engineer.getEngLastName());
+			ps.setString(3, engineer.getEngCity());
+			ps.setInt(4, engineer.getEngSalary());
+			ps.setString(5, engineer.getEngEmail());
+			ps.setString(6 , engineer.getEngPassword());
+			ps.setString(7, engineer.getEngType());
+			ps.setInt(8, engineer.getHodId());
 			int x = ps.executeUpdate();
 			if(x>0) {
 				message="Engineer registered Successfully";
@@ -86,11 +86,12 @@ public class HodDaoImpl implements HodDao {
 	}
 
 	@Override
-	public String deleteEngineer(String username) throws hodException,engineerException{
+	public String deleteEngineer(String username,int hodId) throws hodException,engineerException{
 		String message = "Not deleted";
 		try (Connection conn = DBUtility.provideConnection()){
-			PreparedStatement ps = conn.prepareStatement("delete from engineer where email=?");	
+			PreparedStatement ps = conn.prepareStatement("delete from engineer where engEmail=? and hodId=?");	
 			ps.setString(1, username);
+			ps.setInt(2, hodId);
 			int x = ps.executeUpdate();
 			if(x>0) {
 				message=username + " username Engineer is successfully deleted";
@@ -102,11 +103,12 @@ public class HodDaoImpl implements HodDao {
 	}
 
 	@Override
-	public List<Complaints> raisedProblems(int hodId) throws hodException,complainException{
+	public List<Complaints> raisedProblems() throws hodException,complainException{
 		List<Complaints> list = new ArrayList<>();
 		try (Connection conn = DBUtility.provideConnection()){
-			PreparedStatement ps = conn.prepareStatement("select * from complaints c inner join engineer e on c.engineerId=e.engineerId and e.hodId=?");	
-			ps.setInt(1, hodId);
+			String type="Not Assigned";
+			PreparedStatement ps = conn.prepareStatement("select * from complaints where status=?");	
+			ps.setString(1, type);
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()) {
 				list.add(new Complaints(rs.getInt("complainId"), rs.getInt("employeeId"),rs.getInt("engineerId"), rs.getString("status"), rs.getString("type")));
@@ -119,12 +121,15 @@ public class HodDaoImpl implements HodDao {
 	}
 
 	@Override
-	public String assignProblem(int engId, int complainId) throws hodException,complainException{
+	public String assignProblem(int engId, int complainId,int hodId) throws hodException,complainException{
 		String message = "Not Assigned";
 		try (Connection conn = DBUtility.provideConnection()){
-			PreparedStatement ps = conn.prepareStatement("update complaints set status=assigned where complainId=? and  type=(select engType from engineer where engineerId=?) ");	
-			ps.setInt(1, complainId);
+			String setStatus="Assigned";
+			PreparedStatement ps = conn.prepareStatement(" update complaints set status=?,engineerId=? where type=(select engType from engineer where engineerId=?) and complainId=?");	
+			ps.setString(1, setStatus);
 			ps.setInt(2, engId);
+			ps.setInt(3, engId);
+			ps.setInt(4, complainId);
 			int x = ps.executeUpdate();
 			if(x>0) {
 				message="Assigned Successfully......";

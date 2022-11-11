@@ -23,6 +23,19 @@ public class Engineer {
 		this.engType = engType;
 		this.hodId = Hodid;
 	}
+	
+	public Engineer(String engFirstName, String engLastName, String engCity, int engSalary, String engEmail,
+			String engPassword, String engType, int hodId) {
+		this.engFirstName = engFirstName;
+		this.engLastName = engLastName;
+		this.engCity = engCity;
+		this.engSalary = engSalary;
+		this.engEmail = engEmail;
+		this.engPassword = engPassword;
+		this.engType = engType;
+		this.hodId = hodId;
+	}
+
 	public int getEngineerId() {
 		return engineerId;
 	}

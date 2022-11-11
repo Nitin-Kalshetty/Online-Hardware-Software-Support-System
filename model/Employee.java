@@ -19,6 +19,18 @@ public class Employee {
 		this.empEmail = empEmail;
 		this.empPassword = empPassword;
 	}
+	
+	public Employee(String empFirstname, String empLastname, String empCity, int empSalary, String empEmail,
+			String empPassword) {
+		super();
+		this.empFirstname = empFirstname;
+		this.empLastname = empLastname;
+		this.empCity = empCity;
+		this.empSalary = empSalary;
+		this.empEmail = empEmail;
+		this.empPassword = empPassword;
+	}
+
 	public int getEmpId() {
 		return empId;
 	}

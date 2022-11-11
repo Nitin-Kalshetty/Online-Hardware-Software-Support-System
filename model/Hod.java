@@ -1,25 +1,25 @@
 package model;
 
 public class Hod {
-	private int Hod;
+	private int HodId;
 	private String HodFirstName;
 	private String HodLastName;
 	private String HodCity;
 	private String HodEmail;
 	private String HodPassword;
-	public Hod(int hod, String hodFirstName, String hodLastName, String hodCity, String hodEmail, String hodPassword) {
-		Hod = hod;
+	public Hod(int hodId, String hodFirstName, String hodLastName, String hodCity, String hodEmail, String hodPassword) {
+		HodId = hodId;
 		HodFirstName = hodFirstName;
 		HodLastName = hodLastName;
 		HodCity = hodCity;
 		HodEmail = hodEmail;
 		HodPassword = hodPassword;
 	}
-	public int getHod() {
-		return Hod;
+	public int getHodId() {
+		return HodId;
 	}
-	public void setHod(int hod) {
-		Hod = hod;
+	public void setHodId(int hodId) {
+		HodId = hodId;
 	}
 	public String getHodFirstName() {
 		return HodFirstName;
@@ -53,7 +53,7 @@ public class Hod {
 	}
 	@Override
 	public String toString() {
-		return "Hod [Hod=" + Hod + ", HodFirstName=" + HodFirstName + ", HodLastName=" + HodLastName + ", HodCity="
+		return "Hod [HodId=" + HodId + ", HodFirstName=" + HodFirstName + ", HodLastName=" + HodLastName + ", HodCity="
 				+ HodCity + ", HodEmail=" + HodEmail + ", HodPassword=" + HodPassword + "]";
 	}
 	
